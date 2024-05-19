@@ -31,8 +31,10 @@ class TestBaseModel(unittest.TestCase):
         # Check the key value pairing of the dict
         self.assertEqual(my_base_dict["__class__"], 'BaseModel')
         self.assertEqual(my_base_dict["id"], my_base.id)
-        self.assertEqual(my_base_dict["created_at"], my_base.created_at.isoformat())
-        self.assertEqual(my_base_dict["updated_at"], my_base.updated_at.isoformat())
+        self.assertEqual(my_base_dict["created_at"],
+                         my_base.created_at.isoformat())
+        self.assertEqual(my_base_dict["updated_at"],
+                         my_base.updated_at.isoformat())
 
     def test_str(self):
         my_base = BaseModel()
@@ -43,9 +45,6 @@ class TestBaseModel(unittest.TestCase):
         # Check if there is dict rep. of model in string
         self.assertIn(str(my_base.__dict__), str(my_base))
 
+
 if __name__ == "__main__":
     unittest.main()
-
-
-
-
