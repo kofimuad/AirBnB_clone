@@ -8,6 +8,9 @@ from datetime import datetime
 
 
 class BaseModel:
+    """
+    The primary base model for this project
+    """
     def __init__(self):
         self.id = str(uuid.uuid4())
 
@@ -40,7 +43,7 @@ class BaseModel:
         class_name = self.__class__.__name__
         return ("[{}] ({}) {}".format(class_name, self.id, self.__dict__))
 
-
+"""
 if __name__ == '__main__':
     my_model = BaseModel()
     my_model.name = "My Base Model"
@@ -55,3 +58,4 @@ if __name__ == '__main__':
         print("\t[{}] ({}) - {}".format(key,
                                         type(my_model_json[key]),
                                         my_model_json[key]))
+"""
