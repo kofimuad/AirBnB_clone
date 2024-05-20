@@ -41,7 +41,7 @@ class TestBaseModel(unittest.TestCase):
         # Check if it starts with BaseModel
         self.assertTrue(str(my_base).startswith('[BaseModel]'))
         # Check if id is present in string
-        self.assertIn(my_base.id, str(my_model))
+        self.assertIn(my_base.id, str(my_base))
         # Check if there is dict rep. of model in string
         self.assertIn(str(my_base.__dict__), str(my_base))
 
