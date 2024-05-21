@@ -27,7 +27,7 @@ class FileStorage:
         Saves the obj dict to JSON format
         """
         all_objs = FileStorage.__objects
-        obj_dict = {} # An empty dict to store objects
+        obj_dict = {} #  An empty dict to store objects
 
         for obj in all_objs.keys():
             obj_dict[obj] = all_objs[obj].to_dict()

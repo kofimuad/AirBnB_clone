@@ -65,7 +65,6 @@ class BaseModel:
         return ("[{}] ({}) {}".format(class_name, self.id, self.__dict__))
 
 
-
 if __name__ == '__main__':
     my_model = BaseModel()
     my_model.name = "My Base Model"
