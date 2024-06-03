@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import unittest
-from models import State
+from models.state import State
 from datetime import datetime
 import os
 

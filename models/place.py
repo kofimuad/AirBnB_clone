@@ -4,6 +4,7 @@ Inherits from BaseModel superclass
 """
 
 from models.base_model import BaseModel
+from typing import List
 
 
 class Place(BaseModel):

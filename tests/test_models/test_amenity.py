@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import unittest
-from models import Amenity
+from models.amenity import Amenity
 from datetime import datetime
 import os
 

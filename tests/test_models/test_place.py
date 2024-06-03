@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import unittest
-from models import Place
+from models.place import Place
 from datetime import datetime
 import os
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import unittest
-from models import City
+from models.city import City
 from datetime import datetime
 import os
 
