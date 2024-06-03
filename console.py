@@ -136,6 +136,8 @@ class HBNBCommand(cmd.Cmd):
 
         incoming_extra_arg = command[1].split(')')[0]
 
+        all_args = incoming_extra_arg.split(',')
+
         method_dict = {
             'all': self.do_all,
             'show': self.do_show,
@@ -145,9 +147,19 @@ class HBNBCommand(cmd.Cmd):
         }  # holds all methods we have
 
         if incoming_method in method_dict.keys():
-            return (method_dict[incoming_method]
-                    ("{} {}".format(incoming_class_name,
-                                    incoming_extra_arg)))
+            if incoming_method != "update":
+                return (method_dict[incoming_method]
+                        ("{} {}".format(incoming_class_name,
+                                        incoming_extra_arg)))
+            else:
+                obj_id = all_args[0]
+                attr_name = all_args[1]
+                attr_value = all_args[2]
+                return (method_dict[incoming_method]
+                        ("{} {} {} {}".format(incoming_class_name,
+                                              obj_id,
+                                              attr_name,
+                                              attr_value)))
 
         print("*** Unknown syntax: {}".format(arg))
         return False
