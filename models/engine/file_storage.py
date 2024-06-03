@@ -56,8 +56,8 @@ class FileStorage:
                     for key, value in obj_dict.items():
                         class_name, obj_id = key.split('.')
                         # use eval() to transform it ito a class
-                        cls = eval(class_name)
-                        instance = cls(**value)
+                        clas = eval(class_name)
+                        instance = clas(**value)
 
                         FileStorage.__objects[key] = instance
                 except Exception:
