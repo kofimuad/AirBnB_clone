@@ -3,6 +3,7 @@
 Cmd Module
 """
 import cmd
+import re
 import shlex
 from models.base_model import BaseModel
 from models import storage
@@ -19,7 +20,8 @@ class HBNBCommand(cmd.Cmd):
     CMD class
     """
     prompt = "(hbnb) "
-    valid_classes = ["BaseModel", "User"]
+    valid_classes = ["BaseModel", "User", "Amenity",
+                     "Place", "Review", "State", "City"]
 
     def empty_line(self):
         """
