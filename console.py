@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         command = arg_list[1].split('(')
         incoming_method = command[0]
 
-        method_dict{
+        method_dict = {
             'all': self.do_all,
             'show': self.do_show,
             'destroy': self.do_destroy,
