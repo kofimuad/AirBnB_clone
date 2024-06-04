@@ -201,23 +201,15 @@ class HBNBCommand(cmd.Cmd):
                 except Exception:
                     pass
                 try:
-                    if isinstance(arg_dict, str):
-                        attributes = arg_dict
                 # obj_id = all_args[0]
                 # attr_name = all_args[1]
                 # attr_value = all_args[2]
-                        return (method_dict[incoming_method]
+                    return (method_dict[incoming_method]
                                 ("{} {} {}".format(incoming_class_name,
                                                    obj_id,
-                                                   attributes)))
+                                                   arg_dict)))
                 # attr_name,
                 # attr_value)))
-                    elif isinstance(arg_dict, dict):
-                        dict_attributes = arg_dict
-                        return (method_dict[incoming_method]
-                                ("{} {} {}".format(incoming_class_name,
-                                                   obj_id,
-                                                   dict_attributes)))
                 except Exception:
                     pass
         else:
