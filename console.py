@@ -45,6 +45,7 @@ def split_curly_braces(incoming_extra_arg):
         except Exception:
             print("** argument missing **")
 
+
 class HBNBCommand(cmd.Cmd):
     """
     CMD class
@@ -169,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
 
         incoming_extra_arg = command[1].split(')')[0]
 
-        #all_args = incoming_extra_arg.split(',')
+        # all_args = incoming_extra_arg.split(',')
 
         method_dict = {
             'all': self.do_all,
@@ -189,15 +190,15 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     if isinstance(arg_dict, str):
                         attributes = arg_dict
-                #obj_id = all_args[0]
-                #attr_name = all_args[1]
-                #attr_value = all_args[2]
+                # obj_id = all_args[0]
+                # attr_name = all_args[1]
+                # attr_value = all_args[2]
                         return (method_dict[incoming_method]
                                 ("{} {} {}".format(incoming_class_name,
                                                    obj_id,
                                                    attributes)))
-                                              #attr_name,
-                                              #attr_value)))
+                # attr_name,
+                # attr_value)))
                     elif isinstance(arg_dict, dict):
                         dict_attributes = arg_dict
                         return (method_dict[incoming_method]
