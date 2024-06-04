@@ -266,15 +266,18 @@ class HBNBCommand(cmd.Cmd):
 
                     attribute_names = list(arg_dict.keys())
                     attribute_values = list(arg_dict.values())
-
-                    attr_name1 = attribute_names[0]
-                    attr_value1 = attribute_values[0]
-
-                    attr_name2 = attribute_names[1]
-                    attr_value2 = attribute_values[1]
-
-                    setattr(obj, attr_name1, attr_value1)
-                    setattr(obj, attr_name2, attr_value2)
+                    try:
+                        attr_name1 = attribute_names[0]
+                        attr_value1 = attribute_values[0]
+                        setattr(obj, attr_name1, attr_value1)
+                    except Exception:
+                        pass
+                    try:
+                        attr_name2 = attribute_names[1]
+                        attr_value2 = attribute_values[1]
+                        setattr(obj, attr_name2, attr_value2)
+                    except Exception:
+                        pass
                 else:
                     attr_name = commands[2]
                     attr_value = commands[3]
