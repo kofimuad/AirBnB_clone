@@ -37,13 +37,20 @@ def split_curly_braces(incoming_extra_arg):
         return (id, arg_dict)
     else:
         commands = incoming_extra_arg.split(",")
-        try:
-            id = commands[0]
-            attr_name = commands[1]
-            attr_value = commands[2]
+        if commands:
+            try:
+                id = commands[0]
+            except Exception:
+                return ("", "")
+            try:
+                attr_name = commands[1]
+            except Exception:
+                return (id, "")
+            try:
+                attr_value = commands[2]
+            except Exception:
+                return (id, attr_name)
             return (f"{id}", f"{attr_name} {attr_value}")
-        except Exception:
-            print("** argument missing **")
 
 
 class HBNBCommand(cmd.Cmd):
@@ -186,7 +193,13 @@ class HBNBCommand(cmd.Cmd):
                         ("{} {}".format(incoming_class_name,
                                         incoming_extra_arg)))
             else:
-                obj_id, arg_dict = split_curly_braces(incoming_extra_arg)
+                if not incoming_class_name:
+                    print("** class name missing **")
+                    return
+                try:
+                    obj_id, arg_dict = split_curly_braces(incoming_extra_arg)
+                except Exception:
+                    pass
                 try:
                     if isinstance(arg_dict, str):
                         attributes = arg_dict
