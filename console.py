@@ -220,9 +220,9 @@ class HBNBCommand(cmd.Cmd):
                                                    dict_attributes)))
                 except Exception:
                     print("** argument missing **")
-
-        print("*** Unknown syntax: {}".format(arg))
-        return False
+        else:
+            print("*** Unknown syntax: {}".format(arg))
+            return False
 
     def do_count(self, arg):
         """
