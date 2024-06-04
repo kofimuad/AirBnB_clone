@@ -4,6 +4,7 @@ Cmd Module
 """
 import cmd
 import re
+import ast
 import shlex
 from models.base_model import BaseModel
 from models import storage
@@ -14,6 +15,35 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
+
+def split_curly_braces(incoming_extra_arg):
+    """
+    splits curly braces for update method
+    """
+    curly_braces = re.search(r"\{(.*?)\}",
+                             incoming_extra_arg)
+
+    if curly_braces:
+        id_with_comma = shlex.split(
+            incoming_extra_arg[:curly_braces.span()[0]])
+        id = [i.strip(",") for i in id_with_comma][0]
+
+        str_data = curly_braces.group(1)
+        try:
+            arg_dict = ast.literal_eval("{" + str_data + "}")
+        except Exception:
+            print("** invalid dict format **")
+            return
+        return (id, arg_dict)
+    else:
+        commands = incoming_extra_arg.split(",")
+        try:
+            id = commands[0]
+            attr_name = commands[1]
+            attr_value = commands[2]
+            return (f"{id}", f"{attr_name} {attr_value}")
+        except Exception:
+            print("** argument missing **")
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -88,6 +118,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, arg):
+        """
+        Deletes an instance
+        """
         commands = shlex.split(arg)
 
         if len(commands) == 0:
@@ -136,7 +169,7 @@ class HBNBCommand(cmd.Cmd):
 
         incoming_extra_arg = command[1].split(')')[0]
 
-        all_args = incoming_extra_arg.split(',')
+        #all_args = incoming_extra_arg.split(',')
 
         method_dict = {
             'all': self.do_all,
@@ -152,14 +185,27 @@ class HBNBCommand(cmd.Cmd):
                         ("{} {}".format(incoming_class_name,
                                         incoming_extra_arg)))
             else:
-                obj_id = all_args[0]
-                attr_name = all_args[1]
-                attr_value = all_args[2]
-                return (method_dict[incoming_method]
-                        ("{} {} {} {}".format(incoming_class_name,
-                                              obj_id,
-                                              attr_name,
-                                              attr_value)))
+                obj_id, arg_dict = split_curly_braces(incoming_extra_arg)
+                try:
+                    if isinstance(arg_dict, str):
+                        attributes = arg_dict
+                #obj_id = all_args[0]
+                #attr_name = all_args[1]
+                #attr_value = all_args[2]
+                        return (method_dict[incoming_method]
+                                ("{} {} {}".format(incoming_class_name,
+                                                   obj_id,
+                                                   attributes)))
+                                              #attr_name,
+                                              #attr_value)))
+                    elif isinstance(arg_dict, dict):
+                        dict_attributes = arg_dict
+                        return (method_dict[incoming_method]
+                                ("{} {} {}".format(incoming_class_name,
+                                                   obj_id,
+                                                   dict_attributes)))
+                except Exception:
+                    print("** argument missing **")
 
         print("*** Unknown syntax: {}".format(arg))
         return False
@@ -210,15 +256,34 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 obj = objects[key]
-                attr_name = commands[2]
-                attr_value = commands[3]
+                curly_braces = re.search(r"\{(.*?)\}", arg)
 
-                try:
-                    attr_value = eval(attr_value)
-                    # convert values to their appropriate data types
-                except Exception:
-                    pass
-                setattr(obj, attr_name, attr_value)
+                if curly_braces:
+                    str_data = curly_braces.group(1)
+
+                    arg_dict = ast.literal_eval("{" + str_data + "}")
+
+                    attribute_names = list(arg_dict.keys())
+                    attribute_values = list(arg_dict.values())
+
+                    attr_name1 = attribute_names[0]
+                    attr_value1 = attribute_values[0]
+
+                    attr_name2 = attribute_names[1]
+                    attr_value2 = attribute_values[1]
+
+                    setattr(obj, attr_name1, attr_value1)
+                    setattr(obj, attr_name2, attr_value2)
+                else:
+                    attr_name = commands[2]
+                    attr_value = commands[3]
+
+                    try:
+                        attr_value = eval(attr_value)
+                        # convert values to their appropriate data types
+                    except Exception:
+                        pass
+                    setattr(obj, attr_name, attr_value)
 
                 obj.save()
 
